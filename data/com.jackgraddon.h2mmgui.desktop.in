@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=h2mm-gui
+Exec=h2mm-gui
+Icon=com.jackgraddon.h2mmgui
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

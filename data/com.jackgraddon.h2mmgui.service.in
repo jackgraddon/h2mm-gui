@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.jackgraddon.h2mmgui
+Exec=@bindir@/h2mm-gui --gapplication-service

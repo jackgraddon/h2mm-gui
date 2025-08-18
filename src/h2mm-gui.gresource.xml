@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/com/jackgraddon/h2mmgui">
     <file preprocess="xml-stripblanks">window.ui</file>
+    <file preprocess="xml-stripblanks">gtk/preferences.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
   </gresource>
 </gresources>

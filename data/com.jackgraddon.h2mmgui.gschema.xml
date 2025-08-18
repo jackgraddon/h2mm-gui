@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="h2mm-gui">
 	<schema id="com.jackgraddon.h2mmgui" path="/com/jackgraddon/h2mmgui/">
+		<key name="cli-source" enum="com.jackgraddon.h2mmgui.CliSource">
+			<default>'bundled'</default>
+			<summary>The source for the h2mm-cli executable</summary>
+			<description>
+				Determines whether to use the bundled h2mm-cli executable or a custom one from the host system.
+			</description>
+		</key>
+		<key name="custom-cli-path" type="s">
+			<default>''</default>
+			<summary>Path to the custom h2mm-cli executable</summary>
+			<description>
+				The full filesystem path to the h2mm-cli executable to be used when 'cli-source' is set to 'custom'.
+			</description>
+		</key>
 	</schema>
+	<enum id="com.jackgraddon.h2mmgui.CliSource">
+		<value nick="bundled" value="0"/>
+		<value nick="custom" value="1"/>
+	</enum>
 </schemalist>

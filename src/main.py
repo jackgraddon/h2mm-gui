@@ -25,6 +25,7 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
 from .window import H2mmGuiWindow
+from .preferences import H2mmPreferencesWindow
 
 
 class H2mmGuiApplication(Adw.Application):
@@ -37,6 +38,8 @@ class H2mmGuiApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
+        self.win = None
+        self.preferences_window = None
 
     def do_activate(self):
         """Called when the application is activated.
@@ -44,10 +47,10 @@ class H2mmGuiApplication(Adw.Application):
         We raise the application's main window, creating it if
         necessary.
         """
-        win = self.props.active_window
-        if not win:
-            win = H2mmGuiWindow(application=self)
-        win.present()
+        self.win = self.props.active_window
+        if not self.win:
+            self.win = H2mmGuiWindow(application=self)
+        self.win.present()
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
@@ -58,12 +61,16 @@ class H2mmGuiApplication(Adw.Application):
                                 developers=['Jack Graddon'],
                                 copyright='© 2025 Jack Graddon')
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-        about.set_translator_credits(_('translator-credits'))
+        # about.set_translator_credits(_('translator-credits'))
         about.present(self.props.active_window)
 
     def on_preferences_action(self, widget, _):
         """Callback for the app.preferences action."""
-        print('app.preferences action activated')
+        if self.preferences_window is None:
+            self.preferences_window = H2mmPreferencesWindow(transient_for=self.win)
+
+        self.preferences_window.present()
+
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.

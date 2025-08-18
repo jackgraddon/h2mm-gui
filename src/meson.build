@@ -30,6 +30,7 @@ h2mm_gui_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'preferences.py',
 ]
 
 install_data(h2mm_gui_sources, install_dir: moduledir)

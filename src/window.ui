@@ -8,27 +8,211 @@
   <requires lib="libadwaita" version="1.7"/>
   <template class="H2mmGuiWindow" parent="AdwApplicationWindow">
     <property name="content">
-      <object class="AdwToolbarView">
-        <property name="content">
-          <object class="GtkLabel" id="label">
-            <property name="label" translatable="yes">Hello, World!</property>
-            <style>
-              <class name="title-1"/>
-            </style>
-          </object>
-        </property>
-        <child type="top">
-          <object class="AdwHeaderBar">
-            <child type="end">
-              <object class="GtkMenuButton">
-                <property name="icon-name">open-menu-symbolic</property>
-                <property name="menu-model">primary_menu</property>
-                <property name="primary">True</property>
-                <property name="tooltip-text" translatable="yes">Main Menu</property>
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <property name="child">
+          <object class="AdwToolbarView">
+            <property name="content">
+              <object class="GtkStack" id="stack">
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">install</property>
+                    <property name="title" translatable="yes">Install</property>
+                    <property name="child">
+                      <object class="AdwPreferencesPage">
+                        <child>
+                          <object class="AdwPreferencesGroup">
+                            <child>
+                              <object class="AdwEntryRow" id="install_mod_name_row">
+                                <property name="title" translatable="yes">Mod Name</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwActionRow" id="install_file_row">
+                                <property name="title" translatable="yes">Mod Archive</property>
+                                <property name="subtitle" translatable="yes">No file selected</property>
+                                <property name="activatable">True</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwPreferencesGroup">
+                            <child>
+                              <object class="GtkButton" id="install_button">
+                                <property name="label" translatable="yes">Install</property>
+                                <property name="halign">center</property>
+                                <property name="sensitive">False</property>
+                                <style>
+                                  <class name="pill"/>
+                                  <class name="suggested-action"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">uninstall</property>
+                    <property name="title" translatable="yes">Uninstall</property>
+                    <property name="child">
+                  <object class="GtkStack" id="uninstall_stack">
+                    <property name="transition-type">slide-left-right</property>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">selection</property>
+                        <property name="title" translatable="yes">Select Mod</property>
+                        <property name="child">
+                          <object class="AdwPreferencesPage">
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="title" translatable="yes">Installed Mods</property>
+                                <property name="description" translatable="yes">Select a mod to uninstall</property>
+                                <child>
+                                  <object class="GtkScrolledWindow">
+                                    <property name="hscrollbar-policy">never</property>
+                                    <property name="min-content-height">200</property>
+                                    <property name="child">
+                                      <object class="GtkListBox" id="uninstall_mods_listbox">
+                                        <style>
+                                          <class name="boxed-list"/>
+                                        </style>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <child>
+                                  <object class="GtkButton" id="uninstall_button">
+                                    <property name="label" translatable="yes">Uninstall Selected Mod</property>
+                                    <property name="halign">center</property>
+                                    <property name="sensitive">False</property>
+                                    <style>
+                                      <class name="pill"/>
+                                      <class name="destructive-action"/>
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">progress</property>
+                        <property name="title" translatable="yes">Progress</property>
+                        <property name="child">
+                          <object class="AdwStatusPage">
+                            <property name="title" translatable="yes">Uninstalling Mod...</property>
+                            <property name="icon-name">edit-delete-symbolic</property>
+                            <property name="child">
+                              <object class="GtkScrolledWindow">
+                                <property name="hscrollbar-policy">never</property>
+                                <property name="min-content-height">250</property>
+                                <property name="child">
+                                  <object class="GtkTextView" id="uninstall_output_view">
+                                    <property name="editable">False</property>
+                                    <property name="monospace">True</property>
+                                    <property name="cursor-visible">False</property>
+                                    <property name="wrap-mode">word-char</property>
+                                  </object>
+                                </property>
+                              </object>
+                            </property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">list</property>
+                    <property name="title" translatable="yes">Installed</property>
+                    <property name="child">
+                      <object class="GtkScrolledWindow">
+                        <property name="hscrollbar-policy">never</property>
+                        <property name="child">
+                          <object class="GtkListBox" id="installed_mods_listbox">
+                            <property name="selection-mode">none</property>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">update</property>
+                    <property name="title" translatable="yes">Updates</property>
+                    <property name="child">
+                  <object class="AdwStatusPage" id="update_status_page">
+                    <property name="title" translatable="yes">Check for Mod Updates</property>
+                    <property name="description" translatable="yes">Click the button to check for updates for all installed mods.</property>
+                        <property name="icon-name">software-update-available-symbolic</property>
+                    <child>
+                      <object class="GtkScrolledWindow">
+                        <property name="hscrollbar-policy">never</property>
+                        <property name="min-content-height">250</property>
+                        <property name="margin-top">24</property>
+                        <property name="child">
+                          <object class="GtkTextView" id="update_output_view">
+                            <property name="editable">False</property>
+                            <property name="monospace">True</property>
+                            <property name="cursor-visible">False</property>
+                            <property name="wrap-mode">word-char</property>
+                            <property name="visible">False</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="update_button">
+                        <property name="label" translatable="yes">Check for Updates</property>
+                        <property name="halign">center</property>
+                        <style>
+                          <class name="pill"/>
+                        </style>
+                      </object>
+                    </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <child type="top">
+              <object class="AdwHeaderBar">
+                <child type="title">
+                  <object class="GtkStackSwitcher">
+                    <property name="stack">stack</property>
+                  </object>
+                </child>
+                <child type="end">
+                  <object class="GtkMenuButton">
+                    <property name="icon-name">open-menu-symbolic</property>
+                    <property name="menu-model">primary_menu</property>
+                    <property name="primary">True</property>
+                    <property name="tooltip-text" translatable="yes">Main Menu</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
-        </child>
+        </property>
       </object>
     </property>
     <property name="default-height">600</property>

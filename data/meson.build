@@ -33,7 +33,7 @@ install_data(
 
 meson.add_install_script(
   'glib-compile-schemas',
-  gschemas_dir,
+  '@MESON_INSTALL_PREFIX@' / gschemas_dir,
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false, disabler: true)

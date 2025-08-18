@@ -20,7 +20,7 @@
 import subprocess
 import os
 import pty
-from gi.repository import Adw, Gtk, GLib
+from gi.repository import Adw, Gtk, GLib, Gio
 
 @Gtk.Template(resource_path='/com/jackgraddon/h2mmgui/window.ui')
 class H2mmGuiWindow(Adw.ApplicationWindow):

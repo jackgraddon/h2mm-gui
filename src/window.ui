@@ -1,35 +1,50 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.96.1 -->
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-name window.ui -->
-  <requires lib="adw" version="1.0"/>
   <requires lib="gtk" version="4.0"/>
-  <requires lib="gio" version="2.0"/>
-  <requires lib="libadwaita" version="1.7"/>
+  <requires lib="adw" version="1.0"/>
   <template class="H2mmGuiWindow" parent="AdwApplicationWindow">
+    <property name="title">h2mm-gui</property>
+    <property name="default-width">800</property>
+    <property name="default-height">600</property>
     <property name="content">
       <object class="AdwToastOverlay" id="toast_overlay">
         <property name="child">
           <object class="AdwNavigationSplitView" id="nav_split_view">
-            <property name="content">
+            <property name="sidebar">
               <object class="AdwNavigationPage">
+                <property name="title" translatable="yes">Management</property>
                 <property name="child">
                   <object class="AdwToolbarView">
+                    <child type="top">
+                      <object class="AdwHeaderBar"/>
+                    </child>
                     <property name="content">
                       <object class="GtkScrolledWindow">
                         <property name="child">
-                          <object class="GtkListBox" id="installed_mods_listbox">
-                            <property name="margin-bottom">5</property>
-                            <property name="margin-end">5</property>
-                            <property name="margin-start">5</property>
-                            <property name="margin-top">5</property>
+                          <object class="GtkListBox">
                             <style>
                               <class name="boxed-list"/>
                             </style>
+                            <child>
+                              <object class="AdwActionRow" id="install_mod_row">
+                                <property name="title" translatable="yes">Install a Mod</property>
+                                <property name="activatable">true</property>
+                                <property name="icon-name">document-new-symbolic</property>
+                              </object>
+                            </child>
                           </object>
                         </property>
                       </object>
                     </property>
+                  </object>
+                </property>
+              </object>
+            </property>
+            <property name="content">
+              <object class="AdwNavigationPage">
+                <property name="title" translatable="yes">Installed Mods</property>
+                <property name="child">
+                  <object class="AdwToolbarView">
                     <child type="top">
                       <object class="AdwHeaderBar">
                         <child type="end">
@@ -40,34 +55,10 @@
                         </child>
                       </object>
                     </child>
-                  </object>
-                </property>
-                <property name="title" translatable="yes">Installed Mods</property>
-              </object>
-            </property>
-            <property name="sidebar">
-              <object class="AdwNavigationPage">
-                <property name="child">
-                  <object class="AdwToolbarView">
                     <property name="content">
                       <object class="GtkScrolledWindow">
                         <property name="child">
-                          <object class="GtkListBox">
-                            <property name="margin-bottom">5</property>
-                            <property name="margin-end">5</property>
-                            <property name="margin-start">5</property>
-                            <property name="margin-top">5</property>
-                            <child>
-                              <object class="AdwActionRow" id="install_mod_row">
-                                <property name="activatable">true</property>
-                                <property name="icon-name">plus-large-symbolic</property>
-                                <property name="margin-bottom">5</property>
-                                <property name="margin-end">5</property>
-                                <property name="margin-start">5</property>
-                                <property name="margin-top">5</property>
-                                <property name="title" translatable="yes">Install a Mod</property>
-                              </object>
-                            </child>
+                          <object class="GtkListBox" id="installed_mods_listbox">
                             <style>
                               <class name="boxed-list"/>
                             </style>
@@ -75,21 +66,14 @@
                         </property>
                       </object>
                     </property>
-                    <child type="top">
-                      <object class="AdwHeaderBar"/>
-                    </child>
                   </object>
                 </property>
-                <property name="title" translatable="yes">Management</property>
               </object>
             </property>
           </object>
         </property>
       </object>
     </property>
-    <property name="default-height">600</property>
-    <property name="default-width">800</property>
-    <property name="title">h2mm-gui</property>
   </template>
   <menu id="primary_menu">
     <section>
@@ -100,4 +84,3 @@
     </section>
   </menu>
 </interface>
-

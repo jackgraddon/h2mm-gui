@@ -25,6 +25,7 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
 from .window import H2mmGuiWindow
+from .oobe import H2mmOobeWindow
 
 
 class H2mmGuiApplication(Adw.Application):
@@ -37,12 +38,22 @@ class H2mmGuiApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.win = None
+        self.settings = Gio.Settings.new('com.jackgraddon.h2mmgui')
 
     def do_activate(self):
-        """Called when the application is activated.
+        """Called when the application is activated."""
+        # Show OOBE if it hasn't been completed
+        if not self.settings.get_boolean('oobe-complete'):
+            oobe = H2mmOobeWindow()
+            oobe.connect('oobe-finished', self._show_main_window)
+            oobe.present()
+        else:
+            self._show_main_window()
 
-        We raise the application's main window, creating it if
-        necessary.
+    def _show_main_window(self, *args):
+        """
+        Creates and presents the main application window.
+        This is called after the OOBE is finished or on normal startup.
         """
         self.win = self.props.active_window
         if not self.win:

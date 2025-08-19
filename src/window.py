@@ -21,7 +21,7 @@ import subprocess
 import os
 import pty
 import re
-from gi.repository import Adw, Gtk, GLib
+from gi.repository import Adw, Gtk, GLib, Gio
 
 @Gtk.Template(resource_path='/com/jackgraddon/h2mmgui/window.ui')
 class H2mmGuiWindow(Adw.ApplicationWindow):
@@ -33,8 +33,30 @@ class H2mmGuiWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.settings = Gio.Settings.new('com.jackgraddon.h2mmgui')
         self._populate_mods_list()
         self.install_mod_row.connect('activated', self._on_install_mod_activated)
+
+    def _get_base_command(self):
+        """
+        Constructs the base command for h2mm-cli based on user preferences.
+        """
+        source = self.settings.get_string('cli-source')
+
+        if source == 'custom':
+            custom_path = self.settings.get_string('custom-cli-path')
+            if not custom_path:
+                # This should not happen if OOBE is done correctly, but as a fallback:
+                self.toast_overlay.add_toast(Adw.Toast.new("h2mm-cli path not configured!"))
+                return None
+
+            if 'FLATPAK_ID' in os.environ:
+                return ['flatpak-spawn', '--host', custom_path]
+            else:
+                return [custom_path]
+
+        # Default to 'bundled'. If not in a Flatpak, assume it's in the PATH.
+        return ['h2mm-cli']
 
     def _on_install_mod_activated(self, *args):
         """Handle the 'Install Mod' action row activation."""
@@ -48,22 +70,18 @@ class H2mmGuiWindow(Adw.ApplicationWindow):
             "_Open", Gtk.ResponseType.ACCEPT,
         )
 
-        # Add file filters for common archive types
         filter_zip = Gtk.FileFilter()
         filter_zip.set_name("ZIP archives")
         filter_zip.add_mime_type("application/zip")
         dialog.add_filter(filter_zip)
-
         filter_rar = Gtk.FileFilter()
         filter_rar.set_name("RAR archives")
         filter_rar.add_mime_type("application/vnd.rar")
         dialog.add_filter(filter_rar)
-
         filter_7z = Gtk.FileFilter()
         filter_7z.set_name("7z archives")
         filter_7z.add_mime_type("application/x-7z-compressed")
         dialog.add_filter(filter_7z)
-
         filter_any = Gtk.FileFilter()
         filter_any.set_name("Any files")
         filter_any.add_pattern("*")
@@ -75,8 +93,11 @@ class H2mmGuiWindow(Adw.ApplicationWindow):
     def _on_install_dialog_response(self, dialog, response):
         if response == Gtk.ResponseType.ACCEPT:
             try:
+                base_command = self._get_base_command()
+                if not base_command: return
+
                 mod_path = dialog.get_file().get_path()
-                command = ['h2mm-cli', 'install', mod_path]
+                command = base_command + ['install', mod_path]
 
                 result = subprocess.run(
                     command, check=True, capture_output=True, text=True
@@ -84,7 +105,7 @@ class H2mmGuiWindow(Adw.ApplicationWindow):
 
                 toast = Adw.Toast.new(f"Mod installed successfully!")
                 self.toast_overlay.add_toast(toast)
-                self._populate_mods_list() # Refresh the list
+                self._populate_mods_list()
 
             except subprocess.CalledProcessError as e:
                 toast = Adw.Toast.new(f"Error installing mod: {e.stderr.strip()}")
@@ -98,7 +119,10 @@ class H2mmGuiWindow(Adw.ApplicationWindow):
     def _on_uninstall_button_clicked(self, button, mod_name):
         """Handle the click of a mod's uninstall button."""
         try:
-            command = ['h2mm-cli', 'uninstall', mod_name]
+            base_command = self._get_base_command()
+            if not base_command: return
+
+            command = base_command + ['uninstall', mod_name]
             subprocess.run(command, check=True, capture_output=True, text=True)
             self.toast_overlay.add_toast(Adw.Toast.new(f"Uninstalled '{mod_name}'"))
             self._populate_mods_list()
@@ -112,12 +136,14 @@ class H2mmGuiWindow(Adw.ApplicationWindow):
         is_active = switch.get_active()
         action = 'enable' if is_active else 'disable'
         try:
-            command = ['h2mm-cli', action, mod_name]
+            base_command = self._get_base_command()
+            if not base_command: return
+
+            command = base_command + [action, mod_name]
             subprocess.run(command, check=True, capture_output=True, text=True)
             self.toast_overlay.add_toast(Adw.Toast.new(f"'{mod_name}' has been {action}d."))
         except subprocess.CalledProcessError as e:
             self.toast_overlay.add_toast(Adw.Toast.new(f"Error: {e.stderr.strip()}"))
-            # Revert switch state on failure
             switch.set_active(not is_active)
         except Exception as e:
             self.toast_overlay.add_toast(Adw.Toast.new(f"An unexpected error occurred: {e}"))
@@ -127,13 +153,17 @@ class H2mmGuiWindow(Adw.ApplicationWindow):
         """
         Calls `h2mm-cli list` and populates the listbox with the installed mods.
         """
-        # Clear the listbox before populating
         while (child := self.installed_mods_listbox.get_row_at_index(0)) is not None:
             self.installed_mods_listbox.remove(child)
 
         try:
+            base_command = self._get_base_command()
+            if not base_command:
+                # Error is already shown in a toast by _get_base_command
+                return
+
             result = subprocess.run(
-                ['h2mm-cli', 'list'],
+                base_command + ['list'],
                 capture_output=True,
                 text=True,
                 check=True

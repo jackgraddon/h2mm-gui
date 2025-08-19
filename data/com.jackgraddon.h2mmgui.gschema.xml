@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="h2mm-gui">
 	<schema id="com.jackgraddon.h2mmgui" path="/com/jackgraddon/h2mmgui/">
+		<key name="oobe-complete" type="b">
+			<default>false</default>
+			<summary>Whether the Out-of-Box Experience has been completed</summary>
+			<description>
+				This key is used to determine if the application should show the setup wizard on startup.
+			</description>
+		</key>
 		<key name="cli-source" enum="com.jackgraddon.h2mmgui.CliSource">
 			<default>'bundled'</default>
 			<summary>The source for the h2mm-cli executable</summary>

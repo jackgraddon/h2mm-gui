@@ -25,7 +25,6 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
 from .window import H2mmGuiWindow
-from .preferences import H2mmPreferencesWindow
 
 
 class H2mmGuiApplication(Adw.Application):
@@ -37,9 +36,7 @@ class H2mmGuiApplication(Adw.Application):
                          resource_base_path='/com/jackgraddon/h2mmgui')
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
-        self.create_action('preferences', self.on_preferences_action)
         self.win = None
-        self.preferences_window = None
 
     def do_activate(self):
         """Called when the application is activated.
@@ -63,14 +60,6 @@ class H2mmGuiApplication(Adw.Application):
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
         # about.set_translator_credits(_('translator-credits'))
         about.present(self.props.active_window)
-
-    def on_preferences_action(self, widget, _):
-        """Callback for the app.preferences action."""
-        if self.preferences_window is None:
-            self.preferences_window = H2mmPreferencesWindow(transient_for=self.win)
-
-        self.preferences_window.present()
-
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.

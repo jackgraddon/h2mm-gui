@@ -27,10 +27,6 @@ test('Validate appstream file', appstreamcli,
 gschemas_dir = get_option('datadir') / 'glib-2.0' / 'schemas'
 install_data('com.jackgraddon.h2mmgui.gschema.xml', install_dir: gschemas_dir)
 
-meson.add_install_script(
-  'glib-compile-schemas',
-  get_option('prefix') / gschemas_dir
-)
 
 
 service_conf = configuration_data()

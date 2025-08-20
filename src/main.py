@@ -23,9 +23,9 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk, Gio, Adw
-from .window import H2mmGuiWindow
-from .oobe import H2mmOobeWindow
+from gi.repository import Gio, Adw  # noqa: E402
+from .window import H2mmGuiWindow  # noqa: E402
+from .oobe import H2mmOobeWindow  # noqa: E402
 
 
 class H2mmGuiApplication(Adw.Application):
@@ -60,14 +60,16 @@ class H2mmGuiApplication(Adw.Application):
             self.win = H2mmGuiWindow(application=self)
         self.win.present()
 
-    def on_about_action(self, *args):
+    def on_about_action(self, action, param):
         """Callback for the app.about action."""
-        about = Adw.AboutDialog(application_name='h2mm-gui',
-                                application_icon='com.jackgraddon.h2mmgui',
-                                developer_name='Jack Graddon',
-                                version='0.1.0',
-                                developers=['Jack Graddon'],
-                                copyright='© 2025 Jack Graddon')
+        about = Adw.AboutDialog(
+            application_name='h2mm-gui',
+            application_icon='com.jackgraddon.h2mmgui',
+            developer_name='Jack Graddon',
+            version='0.1.0',
+            developers=['Jack Graddon'],
+            copyright='© 2025 Jack Graddon',
+        )
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
         # about.set_translator_credits(_('translator-credits'))
         about.present(self.props.active_window)

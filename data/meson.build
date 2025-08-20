@@ -25,7 +25,15 @@ test('Validate appstream file', appstreamcli,
      args: ['validate', '--no-net', '--explain', appstream_file])
 
 gschemas_dir = get_option('datadir') / 'glib-2.0' / 'schemas'
-install_data('com.jackgraddon.h2mmgui.gschema.xml', install_dir: gschemas_dir)
+
+glib_compile_schemas = find_program('glib-compile-schemas')
+custom_target('gschemas.compiled',
+  input: 'com.jackgraddon.h2mmgui.gschema.xml',
+  output: 'gschemas.compiled',
+  command: [glib_compile_schemas, '--targetdir=@OUTDIR@', '@CURRENT_SOURCE_DIR@'],
+  install: true,
+  install_dir: gschemas_dir
+)
 
 
 

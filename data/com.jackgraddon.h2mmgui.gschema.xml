@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="h2mm-gui">
+	<enum id="com.jackgraddon.h2mmgui.CliSource">
+		<value nick="bundled" value="0"/>
+		<value nick="custom" value="1"/>
+	</enum>
 	<schema id="com.jackgraddon.h2mmgui" path="/com/jackgraddon/h2mmgui/">
 		<key name="oobe-complete" type="b">
 			<default>false</default>
@@ -23,8 +27,4 @@
 			</description>
 		</key>
 	</schema>
-	<enum id="com.jackgraddon.h2mmgui.CliSource">
-		<value nick="bundled" value="0"/>
-		<value nick="custom" value="1"/>
-	</enum>
 </schemalist>

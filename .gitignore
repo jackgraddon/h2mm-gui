@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build directory
+build/
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# pyenv
+.python-version
+
+# dotenv
+.env
+
+# IDEs
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
+
+# vim
+*.swp

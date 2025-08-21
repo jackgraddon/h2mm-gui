@@ -19,7 +19,6 @@
 
 from gi.repository import Adw, Gtk, Gio, GObject
 
-
 @Gtk.Template(resource_path='/com/jackgraddon/h2mmgui/gtk/oobe.ui')
 class H2mmOobeWindow(Adw.Window):
     __gtype_name__ = 'H2mmOobeWindow'
@@ -40,8 +39,7 @@ class H2mmOobeWindow(Adw.Window):
 
         # Connect signals
         self.bundled_check.connect('toggled', self._on_source_changed)
-        self.custom_cli_path_row.connect(
-            'activated', self._on_select_cli_path_clicked)
+        self.custom_cli_path_row.connect('activated', self._on_select_cli_path_clicked)
         self.finish_button.connect('clicked', self._on_finish_clicked)
 
     def _on_source_changed(self, *args):
@@ -74,8 +72,7 @@ class H2mmOobeWindow(Adw.Window):
         # Save settings
         if self.custom_check.get_active():
             self.settings.set_string('cli-source', 'custom')
-            subtitle = self.custom_cli_path_row.get_subtitle()
-            self.settings.set_string('custom-cli-path', subtitle)
+            self.settings.set_string('custom-cli-path', self.custom_cli_path_row.get_subtitle())
         else:
             self.settings.set_string('cli-source', 'bundled')
             self.settings.set_string('custom-cli-path', '')

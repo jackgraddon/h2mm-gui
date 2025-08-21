@@ -19,15 +19,20 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import os
 import sys
+sys.path.append('/usr/lib/python3/dist-packages')
+import os
 import signal
 import locale
 import gettext
 
 VERSION = '@VERSION@'
-pkgdatadir = '@pkgdatadir@'
 localedir = '@localedir@'
+
+if 'build' in os.path.abspath(__file__):
+    pkgdatadir = os.path.dirname(os.path.abspath(__file__))
+else:
+    pkgdatadir = '@pkgdatadir@'
 
 sys.path.insert(1, pkgdatadir)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -36,6 +41,18 @@ locale.textdomain('h2mm-gui')
 gettext.install('h2mm-gui', localedir)
 
 if __name__ == '__main__':
+    if 'build' in os.path.abspath(__file__):
+        # We are running from the build directory, set up the environment
+        build_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+        # Add src to PYTHONPATH
+        src_dir = os.path.join(build_dir, '..', 'src')
+        sys.path.insert(0, src_dir)
+
+        # Set GSETTINGS_SCHEMA_DIR
+        schema_dir = os.path.join(build_dir, 'data')
+        os.environ['GSETTINGS_SCHEMA_DIR'] = schema_dir
+
     import gi
 
     from gi.repository import Gio

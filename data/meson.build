@@ -1,9 +1,9 @@
 desktop_file = i18n.merge_file(
-  input: 'com.jackgraddon.h2mmgui.desktop.in',
-  output: 'com.jackgraddon.h2mmgui.desktop',
-  type: 'desktop',
-  po_dir: '../po',
-  install: true,
+        input: 'com.jackgraddon.h2mmgui.desktop.in',
+       output: 'com.jackgraddon.h2mmgui.desktop',
+         type: 'desktop',
+       po_dir: '../po',
+      install: true,
   install_dir: get_option('datadir') / 'applications'
 )
 
@@ -13,22 +13,25 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-  input: 'com.jackgraddon.h2mmgui.metainfo.xml.in',
-  output: 'com.jackgraddon.h2mmgui.metainfo.xml',
-  po_dir: '../po',
-  install: true,
+        input: 'com.jackgraddon.h2mmgui.metainfo.xml.in',
+       output: 'com.jackgraddon.h2mmgui.metainfo.xml',
+       po_dir: '../po',
+      install: true,
   install_dir: get_option('datadir') / 'metainfo'
 )
 
 appstreamcli = find_program('appstreamcli', required: false, disabler: true)
-if appstreamcli.found()
-    test('Validate appstream file', appstreamcli,
-        args: ['validate', '--no-net', '--explain', appstream_file])
-endif
+test('Validate appstream file', appstreamcli,
+     args: ['validate', '--no-net', '--explain', appstream_file])
 
-install_data('com.jackgraddon.h2mmgui.gschema.xml',
-  install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
+gschemas_dir = get_option('datadir') / 'glib-2.0' / 'schemas'
+install_data('com.jackgraddon.h2mmgui.gschema.xml', install_dir: gschemas_dir)
+
+meson.add_install_script(
+  'glib-compile-schemas',
+  get_option('prefix') / gschemas_dir
 )
+
 
 service_conf = configuration_data()
 service_conf.set('bindir', get_option('prefix') / get_option('bindir'))

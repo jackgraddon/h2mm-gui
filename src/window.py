@@ -55,8 +55,19 @@ class H2mmGuiWindow(Adw.ApplicationWindow):
             else:
                 return [custom_path]
 
-        # Default to 'bundled'. If not in a Flatpak, assume it's in the PATH.
-        return ['h2mm-cli']
+        # Default to 'bundled'. Check for bundled binary first, then fall back to PATH.
+        # In Flatpak, the bundled binary should be in /app/bin/h2mm-cli
+        if 'FLATPAK_ID' in os.environ:
+            bundled_path = '/app/bin/h2mm-cli'
+            if os.path.exists(bundled_path):
+                return [bundled_path]
+            else:
+                # If bundled binary not found, try to use host-installed version
+                self.toast_overlay.add_toast(Adw.Toast.new("Bundled h2mm-cli not found, trying host version..."))
+                return ['flatpak-spawn', '--host', 'h2mm-cli']
+        else:
+            # Not in Flatpak, assume it's in the PATH
+            return ['h2mm-cli']
 
     def _on_install_mod_activated(self, *args):
         """Handle the 'Install Mod' action row activation."""

@@ -73,7 +73,7 @@ class H2mmOobeWindow(Adw.Window):
     def _on_github_button_clicked(self, *args):
         """Handle the GitHub button click to open the h2mm-cli repository."""
         try:
-            webbrowser.open('https://github.com/h2mm-dev/h2mm-cli')
+            webbrowser.open('https://github.com/h2mm/h2mm-cli')
         except Exception as e:
             print(f"Failed to open GitHub URL: {e}")
 

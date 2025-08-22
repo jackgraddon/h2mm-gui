@@ -1,0 +1,15 @@
+#!/bin/bash
+# H2MM GUI AppImage Launcher Script
+
+# Get the directory where the AppImage is mounted
+APPDIR="$(dirname "$(readlink -f "$0")")"
+
+# Add the h2mm-cli to PATH so the GUI can find it
+export PATH="$APPDIR/usr/bin:$PATH"
+
+# Set up library path
+export LD_LIBRARY_PATH="$APPDIR/usr/lib:${LD_LIBRARY_PATH}"
+
+# Launch the h2mm-gui application
+cd "$APPDIR/usr/share/h2mm-gui"
+gjs main.js

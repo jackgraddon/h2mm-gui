@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=H2MM GUI
+Comment=Graphical interface for h2mm-cli tool
+Exec=gjs /home/jack/Projects/h2mm-gui/src/main.js
+Icon=h2mm-gui
+Terminal=false
+Categories=Utility;System;
+StartupNotify=true

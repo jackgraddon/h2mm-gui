@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
+<interface>
+  <!-- interface-name window.ui -->
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <object class="AdwNavigationSplitView" id="split_view">
+    <property name="max-sidebar-width">400</property>
+    <property name="min-sidebar-width">300</property>
+    <property name="sidebar-width-fraction">0.32</property>
+    <child type="sidebar">
+      <object class="AdwNavigationPage" id="sidebar_page">
+        <property name="hexpand">True</property>
+        <property name="title">Actions</property>
+        <child>
+          <object class="AdwToolbarView" id="sidebar_toolbar_view">
+            <property name="content">
+              <object class="GtkScrolledWindow">
+                <property name="hexpand">True</property>
+                <property name="hscrollbar-policy">never</property>
+                <property name="vscrollbar-policy">automatic</property>
+                <child>
+                  <object class="GtkBox" id="sidebar_content">
+                    <property name="margin-bottom">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-top">12</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">18</property>
+                    <child>
+                      <object class="AdwPreferencesGroup" id="install_group">
+                        <property name="title">Install New Mod</property>
+                        <child>
+                          <object class="AdwEntryRow" id="mod_url_entry">
+                            <property name="text"/>
+                            <property name="title">Mod URL or Path</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="margin-top">12</property>
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">8</property>
+                            <child>
+                              <object class="GtkButton" id="browse_button">
+                                <property name="hexpand">true</property>
+                                <property name="label">Browse...</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="install_button">
+                                <property name="hexpand">true</property>
+                                <property name="label">Install</property>
+                                <style>
+                                  <class name="suggested-action"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwPreferencesGroup" id="actions_group">
+                        <property name="title">Mod Actions</property>
+                        <child>
+                          <object class="AdwActionRow" id="refresh_row">
+                            <property name="activatable">true</property>
+                            <property name="subtitle">Update the list of installed mods</property>
+                            <property name="title">Refresh Mod List</property>
+                            <child type="suffix">
+                              <object class="GtkImage">
+                                <property name="icon-name">view-refresh-symbolic</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow" id="update_all_row">
+                            <property name="activatable">true</property>
+                            <property name="subtitle">Check for and install mod updates</property>
+                            <property name="title">Update All Mods</property>
+                            <child type="suffix">
+                              <object class="GtkImage">
+                                <property name="icon-name">software-update-available-symbolic</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow" id="remove_selected_row">
+                            <property name="activatable">true</property>
+                            <property name="sensitive">false</property>
+                            <property name="subtitle">Remove the currently selected mod</property>
+                            <property name="title">Remove Selected Mod</property>
+                            <child type="suffix">
+                              <object class="GtkImage">
+                                <property name="icon-name">user-trash-symbolic</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwPreferencesGroup" id="settings_group">
+                        <property name="title">Settings</property>
+                        <child>
+                          <object class="AdwActionRow" id="preferences_row">
+                            <property name="activatable">true</property>
+                            <property name="subtitle">Configure application settings</property>
+                            <property name="title">Preferences</property>
+                            <child type="suffix">
+                              <object class="GtkImage">
+                                <property name="icon-name">preferences-system-symbolic</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow" id="about_row">
+                            <property name="activatable">true</property>
+                            <property name="subtitle">About H2MM GUI</property>
+                            <property name="title">About</property>
+                            <child type="suffix">
+                              <object class="GtkImage">
+                                <property name="icon-name">help-about-symbolic</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <property name="hexpand">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child type="content">
+      <object class="AdwNavigationPage" id="content_page">
+        <property name="hexpand">True</property>
+        <property name="title">H2MM Management</property>
+        <child>
+          <object class="AdwToolbarView" id="content_toolbar_view">
+            <property name="content">
+              <object class="AdwTabView" id="main_tab_view">
+                <property name="vexpand">true</property>
+                <child>
+                  <object class="AdwTabPage" id="mods_tab_page">
+                    <property name="title">Mods</property>
+                    <property name="child">
+                      <object class="GtkBox" id="main_content">
+                        <property name="margin-bottom">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="margin-start">12</property>
+                        <property name="margin-top">12</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">18</property>
+                        <child>
+                          <object class="AdwPreferencesGroup" id="status_group">
+                            <property name="title">H2MM CLI Status</property>
+                            <child>
+                              <object class="AdwActionRow" id="status_row">
+                                <property name="subtitle">Please wait</property>
+                                <property name="title">Checking h2mm-cli...</property>
+                                <child type="suffix">
+                                  <object class="GtkImage" id="status_icon">
+                                    <property name="icon-name">content-loading-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwPreferencesGroup" id="mod_list_group">
+                            <property name="title">Installed Mods</property>
+                            <property name="vexpand">true</property>
+                            <child>
+                              <object class="GtkScrolledWindow" id="mod_list_scroll">
+                                <property name="hscrollbar-policy">never</property>
+                                <property name="min-content-height">400</property>
+                                <property name="vexpand">true</property>
+                                <property name="vscrollbar-policy">automatic</property>
+                                <child>
+                                  <object class="GtkListBox" id="mod_list">
+                                    <property name="selection-mode">single</property>
+                                    <child>
+                                      <object class="GtkListBoxRow" id="empty_state_row">
+                                        <property name="selectable">false</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="halign">center</property>
+                                            <property name="margin-bottom">60</property>
+                                            <property name="margin-end">32</property>
+                                            <property name="margin-start">32</property>
+                                            <property name="margin-top">60</property>
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">18</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="icon-name">folder-symbolic</property>
+                                                <property name="pixel-size">72</property>
+                                                <style>
+                                                  <class name="dim-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="halign">center</property>
+                                                <property name="label">No mods installed</property>
+                                                <style>
+                                                  <class name="title-1"/>
+                                                  <class name="dim-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="halign">center</property>
+                                                <property name="justify">center</property>
+                                                <property name="label">Use the sidebar to install your first mod</property>
+                                                <property name="wrap">true</property>
+                                                <style>
+                                                  <class name="dim-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <style>
+                                      <class name="boxed-list"/>
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwTabPage" id="terminal_tab_page">
+                    <property name="title">Terminal</property>
+                    <property name="child">
+                      <object class="GtkBox" id="terminal_content">
+                        <property name="margin-bottom">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="margin-start">12</property>
+                        <property name="margin-top">12</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="AdwPreferencesGroup" id="terminal_group">
+                            <property name="title">H2MM CLI Terminal</property>
+                            <property name="description">Direct access to bundled h2mm commands</property>
+                            <child>
+                              <object class="GtkBox" id="terminal_controls">
+                                <property name="orientation">horizontal</property>
+                                <property name="spacing">8</property>
+                                <property name="margin-bottom">8</property>
+                                <child>
+                                  <object class="GtkEntry" id="terminal_input">
+                                    <property name="hexpand">true</property>
+                                    <property name="placeholder-text">Enter h2mm command (e.g., list, install, update)...</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="terminal_send_button">
+                                    <property name="label">Send</property>
+                                    <style>
+                                      <class name="suggested-action"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="terminal_clear_button">
+                                    <property name="label">Clear</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkScrolledWindow" id="terminal_output_scroll">
+                                <property name="hscrollbar-policy">automatic</property>
+                                <property name="vscrollbar-policy">automatic</property>
+                                <property name="vexpand">true</property>
+                                <property name="min-content-height">400</property>
+                                <child>
+                                  <object class="GtkTextView" id="terminal_output">
+                                    <property name="editable">false</property>
+                                    <property name="cursor-visible">false</property>
+                                    <property name="monospace">true</property>
+                                    <property name="wrap-mode">word-char</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-top">12</property>
+                                    <property name="margin-bottom">12</property>
+                                    <style>
+                                      <class name="terminal"/>
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <property name="reveal-top-bars">False</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -1,5 +1,18 @@
 #!/bin/bash
-export PYTHONPATH=/tmp/install18/usr/local/share/h2mm-gui
-export GI_TYPELIB_PATH=/usr/lib/x86_64-linux-gnu/girepository-1.0
-export GSETTINGS_SCHEMA_DIR=/tmp/install18/usr/local/share/glib-2.0/schemas
-/usr/bin/python3 /tmp/install18/usr/local/bin/h2mm-gui
+# Build and launch script for H2MM GUI
+
+cd "$(dirname "$0")"
+
+echo "🚀 Building and launching H2MM GUI..."
+
+# Run the build script
+./build.sh
+
+# Check if build was successful and launch
+if [ -f "h2mm-gui-x86_64.AppImage" ]; then
+    echo "🎯 Launching h2mm-gui-x86_64.AppImage..."
+    ./h2mm-gui-x86_64.AppImage
+else
+    echo "❌ AppImage not found, falling back to running from source..."
+    gjs src/main.js
+fi

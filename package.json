@@ -1,0 +1,14 @@
+{
+  "name": "h2mm-gui",
+  "version": "1.0.0",
+  "description": "GNOME GUI for h2mm-cli tool",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "gjs src/main.js",
+    "dev": "gjs src/main.js"
+  },
+  "keywords": ["gnome", "gtk4", "adwaita", "javascript"],
+  "author": "Your Name",
+  "license": "GPL-3.0"
+}
+

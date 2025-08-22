@@ -1,0 +1,159 @@
+/* Custom styles for H2MM GUI */
+
+.success {
+    color: @success_color;
+}
+
+.warning {
+    color: @warning_color;
+}
+
+.error {
+    color: @error_color;
+}
+
+/* Custom button styling */
+.action-button {
+    min-height: 40px;
+    min-width: 120px;
+}
+
+/* Status indicators */
+.status-ready {
+    color: @success_color;
+}
+
+.status-busy {
+    color: @warning_color;
+}
+
+.status-error {
+    color: @error_color;
+}
+
+/* Navigation split view styling - no borders */
+.navigation-sidebar {
+    background-color: @sidebar_bg_color;
+    border: none;
+}
+
+/* Remove any borders from the split view */
+split-view > * {
+    border: none;
+}
+
+/* Main content area */
+.main-content {
+    background-color: @window_bg_color;
+}
+
+/* Mod list styling */
+.mod-list-item {
+    padding: 12px;
+    border-radius: 6px;
+    margin: 2px;
+}
+
+.mod-list-item:hover {
+    background-color: alpha(@accent_color, 0.08);
+}
+
+.mod-list-item:selected {
+    background-color: @accent_bg_color;
+    color: @accent_fg_color;
+}
+
+/* Empty state styling - removed invalid text-align property */
+.empty-state {
+    padding: 60px 32px;
+}
+
+.empty-state image {
+    opacity: 0.5;
+    margin-bottom: 18px;
+}
+
+.empty-state label {
+    opacity: 0.7;
+}
+
+/* Install section styling */
+.install-section {
+    margin-bottom: 18px;
+}
+
+/* Install buttons - removed invalid gap property */
+.install-buttons {
+    margin-top: 12px;
+}
+
+/* Action rows styling */
+.action-row {
+    padding: 12px;
+    border-radius: 6px;
+    margin: 1px;
+}
+
+.action-row:hover {
+    background-color: alpha(@accent_color, 0.1);
+}
+
+.action-row:active {
+    background-color: alpha(@accent_color, 0.2);
+}
+
+/* Preferences group spacing */
+.preferences-group {
+    margin-bottom: 18px;
+}
+
+/* Boxed list improvements */
+.boxed-list {
+    border-radius: 8px;
+    background-color: @card_bg_color;
+    border: 1px solid @borders;
+}
+
+.boxed-list row {
+    border-radius: 6px;
+    margin: 2px;
+    padding: 2px;
+}
+
+.boxed-list row:hover {
+    background-color: alpha(@accent_color, 0.08);
+}
+
+.boxed-list row:selected {
+    background-color: @accent_bg_color;
+    color: @accent_fg_color;
+}
+
+/* Navigation page styling */
+.navigation-page {
+    background-color: @window_bg_color;
+}
+
+/* Toolbar view styling */
+.toolbar-view {
+    background-color: @window_bg_color;
+}
+
+/* Terminal styling */
+.terminal {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Liberation Mono', monospace;
+    font-size: 12px;
+    padding: 12px;
+}
+
+.terminal:focus {
+    outline: none;
+}
+
+/* Terminal input styling */
+#terminal_input {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Liberation Mono', monospace;
+    font-size: 12px;
+}

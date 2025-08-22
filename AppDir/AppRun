@@ -1,0 +1,18 @@
+#!/bin/bash
+# AppRun script for h2mm-gui AppImage
+
+# Get the directory where the AppImage is mounted
+SELF=$(readlink -f "$0")
+HERE=${SELF%/*}
+
+# Set up environment variables
+export APPDIR="${HERE}"
+export PATH="${HERE}/usr/bin:${PATH}"
+export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
+
+# Set GJS module path to find our application files
+export GJS_PATH="${HERE}/usr/share/h2mm-gui:${GJS_PATH}"
+
+# Change to the application directory and run the GUI
+cd "${HERE}/usr/share/h2mm-gui"
+exec gjs main.js "$@"

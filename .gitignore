@@ -22,4 +22,6 @@ __pycache__/
 
 # Local development
 .env
-.local
+.local# Temporary files - should not be committed
+compiled-schemas/
+builddir/

@@ -25,3 +25,9 @@ __pycache__/
 .local# Temporary files - should not be committed
 compiled-schemas/
 builddir/
+
+# h2mm-cli binary (bundled in Flatpak, not committed to git)
+h2mm-cli
+
+# Production manifest with placeholders
+com.jackgraddon.h2mmgui.production.json

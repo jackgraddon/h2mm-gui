@@ -28,7 +28,7 @@ class H2mmGuiApplication(Adw.Application):
             window = H2mmGuiWindow(application=self)
         window.present()
 
-def main():
+def main(version=None):
     """The application's entry point."""
     app = H2mmGuiApplication()
     return app.run(sys.argv)

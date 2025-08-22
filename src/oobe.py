@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from gi.repository import Adw, Gtk, Gio, GObject
+import webbrowser
 
 @Gtk.Template(resource_path='/com/jackgraddon/h2mmgui/gtk/oobe.ui')
 class H2mmOobeWindow(Adw.Window):
@@ -32,6 +33,7 @@ class H2mmOobeWindow(Adw.Window):
     custom_check = Gtk.Template.Child()
     custom_cli_path_row = Gtk.Template.Child()
     finish_button = Gtk.Template.Child()
+    github_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -41,6 +43,7 @@ class H2mmOobeWindow(Adw.Window):
         self.bundled_check.connect('toggled', self._on_source_changed)
         self.custom_cli_path_row.connect('activated', self._on_select_cli_path_clicked)
         self.finish_button.connect('clicked', self._on_finish_clicked)
+        self.github_button.connect('clicked', self._on_github_button_clicked)
 
     def _on_source_changed(self, *args):
         """Enable/disable the custom path row based on the selection."""
@@ -66,6 +69,13 @@ class H2mmOobeWindow(Adw.Window):
             file_path = dialog.get_file().get_path()
             self.custom_cli_path_row.set_subtitle(file_path)
         dialog.destroy()
+
+    def _on_github_button_clicked(self, *args):
+        """Handle the GitHub button click to open the h2mm-cli repository."""
+        try:
+            webbrowser.open('https://github.com/h2mm-dev/h2mm-cli')
+        except Exception as e:
+            print(f"Failed to open GitHub URL: {e}")
 
     def _on_finish_clicked(self, *args):
         """Save settings and close the OOBE window."""

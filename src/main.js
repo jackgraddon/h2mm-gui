@@ -63,7 +63,9 @@ const H2mmGuiWindow = GObject.registerClass({
         // Load UI from file
         const builder = new Gtk.Builder();
         try {
-            const uiFile = '/home/jack/Projects/h2mm-gui/src/ui/window.ui';
+            // Get the directory where the script is located
+            const scriptPath = GLib.get_current_dir();
+            const uiFile = GLib.build_filenamev([scriptPath, 'src', 'ui', 'window.ui']);
             builder.add_from_file(uiFile);
 
             // Get the split view directly from the UI file
@@ -523,7 +525,9 @@ const H2mmGuiWindow = GObject.registerClass({
     _loadCustomCSS() {
         const cssProvider = new Gtk.CssProvider();
         try {
-            const cssFile = Gio.File.new_for_path('/home/jack/Projects/h2mm-gui/src/style.css');
+            const scriptPath = GLib.get_current_dir();
+            const cssFilePath = GLib.build_filenamev([scriptPath, 'src', 'style.css']);
+            const cssFile = Gio.File.new_for_path(cssFilePath);
             cssProvider.load_from_file(cssFile);
             Gtk.StyleContext.add_provider_for_display(
                 this.get_display(),
